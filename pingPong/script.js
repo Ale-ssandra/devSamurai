@@ -2,7 +2,6 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 const lineWidth = 15;
 
-
 //objeto é importante para delegar propriedades , nao compartilhando tudo com os outros objetos
 // nesse objeto campo defini alguams propriedades que seia como caracteristicas e a funçao de desenhar o campo
 // seria as acoes a serem tomadas. Tudo isso para ter especificiadades para aquele objeto.
@@ -12,9 +11,34 @@ const campo = {
   draw: function () {
     // desenho do campo
     ctx.fillStyle = "green";
-    ctx.fillRect(0, 0, campo.w, campo.h);
+    ctx.fillRect(0, 0, this.w, this.h);
   },
 };
+const line = {
+  w: lineWidth,
+  h: campo.h,
+  draw: function () {
+    ctx.fillStyle = "#fff";
+    const x = window.innerWidth / 2 - this.w / 2;
+    const y = 0;
+    const w = lineWidth;
+    const h = window.innerHeight;
+
+    ctx.fillRect(x, y, w, h);
+  },
+};
+const raqueteEsquerda = {
+  x: 10,
+  y: 400,
+  w: lineWidth,
+  h: 200,
+  draw: function () {
+    ctx.fillRect(this.x, this.y, this.w, this.h);
+  },
+};
+
+
+const raqueteDireita = {}
 
 function setup() {
   canvas.width = window.innerWidth;
@@ -23,22 +47,11 @@ function setup() {
   ctx.width = window.innerWidth;
 }
 
-//   (a , b, c, d) AeB sao as posicoes de onde ficara o elemento  e CeD o tamanho do elemento
 function draw() {
- 
-  campo.draw()
+  campo.draw();
+  line.draw();
+  raqueteEsquerda.draw();
 
-  // desenho da linha do campo
-  ctx.fillStyle = "#fff";
-  const x = window.innerWidth / 2 - lineWidth / 2;
-  const y = 0;
-  const w = lineWidth;
-  const h = window.innerHeight;
-
-  ctx.fillRect(x, y, w, h);
-
-  //desenhando raquete esquerda
-  ctx.fillRect(10, 400, lineWidth, 200);
 
   // desenhando raquete direita
   ctx.fillRect(window.innerWidth - lineWidth - 10, 220, lineWidth, 200);
