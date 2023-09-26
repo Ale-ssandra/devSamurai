@@ -68,7 +68,7 @@ const bola = {
     ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, false);
     ctx.fillStyle = "#fff";
     ctx.fill();
-    // fill serve para d desenhar a bola p[or isso tem definir uma cor antes se nao ela pega de outro lugar
+    // fill serve para d desenhar a bola p[or isso tem definir uma cor antes se nao ela pega de outro lu]
   },
 };
 
@@ -88,7 +88,7 @@ function draw() {
   raqueteDireita.draw();
   placar.draw();
   bola.draw();
-
+}
 setup();
 draw();
 
