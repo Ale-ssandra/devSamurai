@@ -37,8 +37,40 @@ const raqueteEsquerda = {
   },
 };
 
+const raqueteDireita = {
+  x: window.innerWidth - lineWidth - 10,
+  y: 200,
+  w: line.w,
+  h: 200,
+  draw: function () {
+    ctx.fillRect(this.x, this.y, this.w, this.h);
+  },
+};
+const placar = {
+  humano: 1,
+  computador: 2,
+  draw: function () {
+    ctx.font = " bold 60px  arial ";
+    ctx.textAling = "center";
+    ctx.textBaseline = "top";
+    ctx.fillStyle = "#0f4e0f";
+    ctx.fillText(this.humano, campo.w / 4, 50);
+    ctx.fillText(this.computador, campo.w/ 4 + campo.w / 2, 50);
+  },
+};
 
-const raqueteDireita = {}
+const bola = {
+  x: 400,
+  y: 200,
+  r: 20,
+  draw: function () {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, false);
+    ctx.fillStyle = "#fff";
+    ctx.fill();
+    // fill serve para d desenhar a bola p[or isso tem definir uma cor antes se nao ela pega de outro lugar
+  },
+};
 
 function setup() {
   canvas.width = window.innerWidth;
@@ -47,28 +79,15 @@ function setup() {
   ctx.width = window.innerWidth;
 }
 
+
+// essa funçao esta chamando todos os draw para um unico lugar e obj de cada elemento é r4esponsavel por cada regra de cada um elemento
 function draw() {
   campo.draw();
   line.draw();
   raqueteEsquerda.draw();
-
-
-  // desenhando raquete direita
-  ctx.fillRect(window.innerWidth - lineWidth - 10, 220, lineWidth, 200);
-
-  // desenhando a bolinha
-  ctx.beginPath();
-  ctx.arc(200, 500, 20, 0, 2 * Math.PI, false);
-  ctx.fill();
-
-  // Dessenho do placar
-  ctx.font = " bold 60px  arial ";
-  ctx.textAling = "center";
-  ctx.textBaseline = "top";
-  ctx.fillStyle = "#0f4e0f";
-  ctx.fillText("3", window.innerWidth / 4, 50);
-  ctx.fillText("5", window.innerWidth / 4 + window.innerWidth / 2, 50);
-}
+  raqueteDireita.draw();
+  placar.draw();
+  bola.draw();
 
 setup();
 draw();
