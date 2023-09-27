@@ -55,7 +55,7 @@ const placar = {
     ctx.textBaseline = "top";
     ctx.fillStyle = "#0f4e0f";
     ctx.fillText(this.humano, campo.w / 4, 50);
-    ctx.fillText(this.computador, campo.w/ 4 + campo.w / 2, 50);
+    ctx.fillText(this.computador, campo.w / 4 + campo.w / 2, 50);
   },
 };
 
@@ -63,12 +63,17 @@ const bola = {
   x: 400,
   y: 200,
   r: 20,
+  _move: function () {
+    this.x += 1 * 5;
+    this.y += 1 * 5;
+  },
   draw: function () {
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, false);
     ctx.fillStyle = "#fff";
     ctx.fill();
     // fill serve para d desenhar a bola p[or isso tem definir uma cor antes se nao ela pega de outro lu]
+    this._move();
   },
 };
 
@@ -79,7 +84,6 @@ function setup() {
   ctx.width = window.innerWidth;
 }
 
-
 // essa funçao esta chamando todos os draw para um unico lugar e obj de cada elemento é r4esponsavel por cada regra de cada um elemento
 function draw() {
   campo.draw();
@@ -89,7 +93,23 @@ function draw() {
   placar.draw();
   bola.draw();
 }
-setup();
-draw();
 
-// desafio para mim, tentar tranformar os outros elementos em objetos
+window.animateFrame = (function () {
+  return (
+    window.requestAnimationFrame ||
+    window.webkitRequestAnimationFrame ||
+    window.mozRequestAnimationFrame ||
+    window.oRequestAnimationFrame ||
+    window.msRequestAnimationFrame ||
+    function (callback) {
+      return window.setTimeout(callback, 1000 / 60);
+    }
+  );
+})();
+function main (){
+  animateFrame(main)
+  draw()
+}
+setup()
+main()
+
