@@ -1,7 +1,7 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 const lineWidth = 15;
-const mouse = {x: 0 , y:0}
+const mouse = { x: 0, y: 0 };
 
 //objeto é importante para delegar propriedades , nao compartilhando tudo com os outros objetos
 // nesse objeto campo defini alguams propriedades que seia como caracteristicas e a funçao de desenhar o campo
@@ -33,13 +33,13 @@ const raqueteEsquerda = {
   y: 0,
   w: lineWidth,
   h: 200,
-  _move: function (){
-    this.y = mouse.y - this.h / 2
+  _move: function () {
+    this.y = mouse.y - this.h / 2;
   },
   draw: function () {
     ctx.fillRect(this.x, this.y, this.w, this.h);
 
-    this._move()
+    this._move();
   },
 };
 
@@ -48,12 +48,12 @@ const raqueteDireita = {
   y: 200,
   w: line.w,
   h: 200,
-  _move: function(){
-    this.y = bola.y
+  _move: function () {
+    this.y = bola.y;
   },
   draw: function () {
     ctx.fillRect(this.x, this.y, this.w, this.h);
-    this._move()
+    this._move();
   },
 };
 const placar = {
@@ -70,13 +70,30 @@ const placar = {
 };
 
 const bola = {
-  x: 400,
-  y: 200,
+  x: 0,
+  y: 0,
   r: 20,
-  _move: function () {
-    this.x += 1 * 5;
-    this.y += 1 * 5;
+  speed: 5,
+  directionX: 1,
+  directionY: 1,
+  _calcPosition: function () {
+    if (this.y > campo.h - this.r) {
+      this.reverseY();
+    }
   },
+
+  reverseX: function () {
+    this.directionX *= -1;
+  },
+  reverseY: function () {
+    this.directionY *= -1;
+  },
+
+  _move: function () {
+    this.x += this.directionX * this.speed;
+    this.y += this.directionY * this.speed;
+  },
+
   draw: function () {
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, false);
@@ -84,6 +101,7 @@ const bola = {
     ctx.fill();
     // fill serve para d desenhar a bola p[or isso tem definir uma cor antes se nao ela pega de outro lu]
     this._move();
+    this._calcPosition();
   },
 };
 
@@ -116,15 +134,14 @@ window.animateFrame = (function () {
     }
   );
 })();
-function main (){
-  animateFrame(main)
-  draw()
+function main() {
+  animateFrame(main);
+  draw();
 }
-setup()
-main()
+setup();
+main();
 
-canvas.addEventListener("mousemove", function(e){
-  mouse.x = e.pageX
-  mouse.y = e.pageY
-})
-
+canvas.addEventListener("mousemove", function (e) {
+  mouse.x = e.pageX;
+  mouse.y = e.pageY;
+});
