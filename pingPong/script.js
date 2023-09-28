@@ -1,6 +1,7 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 const lineWidth = 15;
+const mouse = {x: 0 , y:0}
 
 //objeto é importante para delegar propriedades , nao compartilhando tudo com os outros objetos
 // nesse objeto campo defini alguams propriedades que seia como caracteristicas e a funçao de desenhar o campo
@@ -29,11 +30,16 @@ const line = {
 };
 const raqueteEsquerda = {
   x: 10,
-  y: 400,
+  y: 0,
   w: lineWidth,
   h: 200,
+  _move: function (){
+    this.y = mouse.y - this.h / 2
+  },
   draw: function () {
     ctx.fillRect(this.x, this.y, this.w, this.h);
+
+    this._move()
   },
 };
 
@@ -42,8 +48,12 @@ const raqueteDireita = {
   y: 200,
   w: line.w,
   h: 200,
+  _move: function(){
+    this.y = bola.y
+  },
   draw: function () {
     ctx.fillRect(this.x, this.y, this.w, this.h);
+    this._move()
   },
 };
 const placar = {
@@ -112,4 +122,9 @@ function main (){
 }
 setup()
 main()
+
+canvas.addEventListener("mousemove", function(e){
+  mouse.x = e.pageX
+  mouse.y = e.pageY
+})
 
