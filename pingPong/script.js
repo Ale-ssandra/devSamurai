@@ -77,15 +77,34 @@ const bola = {
   directionX: 1,
   directionY: 1,
   _calcPosition: function () {
-    if (this.y > campo.h - this.r) {
+    if(this.x > campo.w){
+      if(this.y + this.r > raqueteDireita && this.y + this.r < raqueteDireita + raqueteEsquerda){
+        this.reverseX()
+      }
+    }
+// termina ver video amanha , pasanado mal hj
+
+
+
+
+
+
+
+
+
+
+    if ((this.y - this.r < 0 && this.directionY < 0) ||
+    (this.y > campo.h - this.r)) {
       this.reverseY();
     }
   },
-
+// essa parte recalcula o eixto da bola
   reverseX: function () {
     this.directionX *= -1;
   },
   reverseY: function () {
+    // 1 * -1 = -1
+    // -1 * _1 = 1
     this.directionY *= -1;
   },
 
