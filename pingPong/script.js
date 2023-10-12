@@ -57,8 +57,14 @@ const raqueteDireita = {
   },
 };
 const placar = {
-  humano: 1,
-  computador: 2,
+  humano: 0,
+  computador: 0,
+  increaseHuman: function () {
+    this.humano++;
+  },
+  increaseComputer: function () {
+    this.computador++;
+  },
   draw: function () {
     ctx.font = " bold 60px  arial ";
     ctx.textAling = "center";
@@ -77,28 +83,36 @@ const bola = {
   directionX: 1,
   directionY: 1,
   _calcPosition: function () {
-    if(this.x > campo.w){
-      if(this.y + this.r > raqueteDireita && this.y + this.r < raqueteDireita + raqueteEsquerda){
-        this.reverseX()
+    if (this.x > campo.w -this.r - raqueteEsquerda.w - 10) {
+      if (
+        this.y + this.r > raqueteDireita &&
+        this.y + this.r < raqueteDireita + raqueteEsquerda
+      ) {
+        this.reverseX();
+      } else {
+        // pontuar o jogador 1
+        placar.increaseHuman();
+        this._pointUp();
       }
     }
-// termina ver video amanha , pasanado mal hj
-
-
-
-
-
-
-
-
-
-
-    if ((this.y - this.r < 0 && this.directionY < 0) ||
-    (this.y > campo.h - this.r)) {
+    if(this.x < 0){
+      if (this.y > raqueteDireita.y && this.y < raqueteDireita.y + raqueteDireita.h){
+      this.reverseX()  
+      }else{
+        placar.increaseComputer()
+        this._pointUp()
+      }
+      
+    }
+    /// verificar as laterias de cima
+    if (
+      (this.y - this.r < 0 && this.directionY < 0) ||
+      this.y > campo.h - this.r
+    ) {
       this.reverseY();
     }
   },
-// essa parte recalcula o eixto da bola
+  // essa parte recalcula o eixto da bola
   reverseX: function () {
     this.directionX *= -1;
   },
@@ -107,7 +121,10 @@ const bola = {
     // -1 * _1 = 1
     this.directionY *= -1;
   },
-
+  _pointUp: function () {
+    this.x = campo.w / 2;
+    this.y = campo.h / 2;
+  },
   _move: function () {
     this.x += this.directionX * this.speed;
     this.y += this.directionY * this.speed;
@@ -164,3 +181,4 @@ canvas.addEventListener("mousemove", function (e) {
   mouse.x = e.pageX;
   mouse.y = e.pageY;
 });
+// resumo da opera nao to entendendo oq ta errado
