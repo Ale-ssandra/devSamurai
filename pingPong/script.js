@@ -83,10 +83,10 @@ const bola = {
   directionX: 1,
   directionY: 1,
   _calcPosition: function () {
-    if (this.x > campo.w -this.r - raqueteEsquerda.w - 10) {
+    if (this.x > campo.w - this.r - raqueteEsquerda.w - 10) {
       if (
-        this.y + this.r > raqueteDireita &&
-        this.y + this.r < raqueteDireita + raqueteEsquerda
+        this.y + this.r > raqueteDireita.y &&
+        this.y + this.r < raqueteDireita.y + raqueteEsquerda.h
       ) {
         this.reverseX();
       } else {
@@ -95,15 +95,30 @@ const bola = {
         this._pointUp();
       }
     }
-    if(this.x < 0){
-      if (this.y > raqueteDireita.y && this.y < raqueteDireita.y + raqueteDireita.h){
-      this.reverseX()  
-      }else{
-        placar.increaseComputer()
-        this._pointUp()
+
+    if (this.x < 0) {
+      if (
+        this.y > raqueteDireita.y &&
+        this.y < raqueteDireita.y + raqueteDireita.h
+      ) {
+        this.reverseX();
+      } else {
+        placar.increaseComputer();
+        this._pointUp();
       }
-      
     }
+    if (this.x < this.r + raqueteEsquerda.w + 10) {
+      if (
+        this.y + this.r > raqueteEsquerda.y &&
+        this.y - this.r < raqueteEsquerda.y + raqueteEsquerda.h
+      ) {
+        this.reverseX();
+      } else {
+        this._pointUp();
+        placar.increaseComputer();
+      }
+    }
+
     /// verificar as laterias de cima
     if (
       (this.y - this.r < 0 && this.directionY < 0) ||
@@ -154,8 +169,8 @@ function draw() {
   line.draw();
   raqueteEsquerda.draw();
   raqueteDireita.draw();
-  placar.draw();
   bola.draw();
+  placar.draw();
 }
 
 window.animateFrame = (function () {
