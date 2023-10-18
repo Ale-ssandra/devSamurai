@@ -76,7 +76,7 @@ const placar = {
 };
 
 const bola = {
-  x: 0,
+  x: 50,
   y: 0,
   r: 20,
   speed: 5,
